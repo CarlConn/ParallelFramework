@@ -32,13 +32,19 @@ namespace ParallelFramework.Config
         [JsonProperty("isLog")]
         public string IsLog { get; set; }
 
+        [JsonProperty("isReporting")]
+        public string IsReporting { get; set; }
 
         [JsonProperty("logPath")]
         public string LogPath { get; set; }
 
-
         [JsonProperty("browser")]
         public BrowserType Browser { get; set; }
 
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
+
+        [JsonProperty("passWord")]
+        public string PassWord { get; set; }
     }
 }

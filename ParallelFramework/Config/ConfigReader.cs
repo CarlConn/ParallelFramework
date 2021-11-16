@@ -20,7 +20,10 @@ namespace ParallelFramework.Config
             Settings.AUT = configurationRoot.GetSection("testSettings").Get<TestSettings>().AUT;
             Settings.TestType = configurationRoot.GetSection("testSettings").Get<TestSettings>().TestType;
             Settings.IsLog = configurationRoot.GetSection("testSettings").Get<TestSettings>().IsLog;
+            Settings.IsReporting = configurationRoot.GetSection("testSettings").Get<TestSettings>().IsReporting;
             Settings.LogPath = configurationRoot.GetSection("testSettings").Get<TestSettings>().LogPath;
+            Settings.UserName = configurationRoot.GetSection("testSettings").Get<TestSettings>().UserName;
+            Settings.PassWord = configurationRoot.GetSection("testSetting").Get<TestSettings>().PassWord;
             Settings.BrowserType = configurationRoot.GetSection("testSettings").Get<TestSettings>().Browser;
         }
     }

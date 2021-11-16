@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Edge.SeleniumTools;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
@@ -18,11 +10,11 @@ using EdgeOptions = Microsoft.Edge.SeleniumTools.EdgeOptions;
 
 namespace ParallelFramework.Base
 {
-    public class TestInitializeHook
+    public class TestInitialize
     {
         private readonly ParallelConfig _parallelConfig;
 
-        public TestInitializeHook(ParallelConfig parallelConfig)
+        public TestInitialize(ParallelConfig parallelConfig)
         {
             _parallelConfig = parallelConfig;
         }
@@ -51,11 +43,9 @@ namespace ParallelFramework.Base
                     driverOptions = new InternetExplorerOptions();
                     break;
                 case EdgeOptions edgeOptions:
-                    //var edgeDriverService = Microsoft.Edge.SeleniumTools.EdgeDriverService.CreateChromiumService();
                     edgeOptions = new Microsoft.Edge.SeleniumTools.EdgeOptions();
                     edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
                     edgeOptions.UseChromium = true;
-                    //_parallelConfig.Driver = new Microsoft.Edge.SeleniumTools.EdgeDriver(edgeDriverService, edgeOptions);
                     break;
                 case FirefoxOptions firefoxOptions:
                     firefoxOptions.AddAdditionalCapability(CapabilityType.BrowserName, "firefox");

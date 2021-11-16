@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Driver.Core.Authentication;
 using ParallelFramework.Base;
 
 namespace ParallelFramework.Config
@@ -26,5 +27,7 @@ namespace ParallelFramework.Config
         public static string IsLog { get; set; }
 
         public static string LogPath { get; set; }
-    }
+        public static string UserName { get; set; }
+        public static string PassWord { get; set; }
+}
 }
