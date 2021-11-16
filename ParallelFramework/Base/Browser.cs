@@ -19,6 +19,7 @@ namespace ParallelFramework.Base
     public enum BrowserType
     {
         Edge,
+        InternetExplorer,
         FireFox,
         Chrome
     }

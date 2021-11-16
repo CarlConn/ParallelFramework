@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using ParallelFramework.Base;
 
 namespace ParallelFramework.Config
@@ -11,14 +13,15 @@ namespace ParallelFramework.Config
     {
         public static void SetFrameworkSettings()
         {
-            Settings.AUT = EATestConfiguration.EASettings.TestSettings["staging"].AUT;
-            //Settings.BuildName = buildname.Value.ToString();
-            Settings.TestType = EATestConfiguration.EASettings.TestSettings["staging"].TestType;
-            Settings.IsLog = EATestConfiguration.EASettings.TestSettings["staging"].IsLog;
-            //Settings.IsReporting = EATestConfiguration.EASettings.TestSettings["staging"].IsReadOnly;
-            Settings.LogPath = EATestConfiguration.EASettings.TestSettings["staging"].LogPath;
-            Settings.AppConnectionString = EATestConfiguration.EASettings.TestSettings["staging"].AUTDBConnectionString;
-            Settings.BrowserType = (BrowserType)Enum.Parse(typeof(BrowserType), EATestConfiguration.EASettings.TestSettings["staging"].Browser);
+            var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            IConfigurationRoot configurationRoot = builder.Build();
+
+            Settings.AUT = configurationRoot.GetSection("testSettings").Get<TestSettings>().AUT;
+            Settings.TestType = configurationRoot.GetSection("testSettings").Get<TestSettings>().TestType;
+            Settings.IsLog = configurationRoot.GetSection("testSettings").Get<TestSettings>().IsLog;
+            Settings.LogPath = configurationRoot.GetSection("testSettings").Get<TestSettings>().LogPath;
+            Settings.BrowserType = configurationRoot.GetSection("testSettings").Get<TestSettings>().Browser;
         }
     }
 }
