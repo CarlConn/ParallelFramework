@@ -14,7 +14,7 @@ namespace ParallelFrameworkTests.UnitTests
         [TestMethod]
         public void LogInPageTest()
         {
-
+            
         }
     }
 }

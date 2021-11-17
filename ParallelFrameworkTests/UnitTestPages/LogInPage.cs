@@ -11,7 +11,9 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     class LogInPage : BasePage
     {
-        public LogInPage(ParallelConfig parallelConfig) : base(parallelConfig) { }
+        public LogInPage(ParallelConfig parallelConfig) : base(parallelConfig)
+        {
+        }
 
         private IWebElement TxtUserName =>
             _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
@@ -57,6 +59,5 @@ namespace ParallelFrameworkTests.UnitTestPages
             BtnLogIn.Click();
             return new EmployeeListPage(_parallelConfig);
         }
-
     }
 }
