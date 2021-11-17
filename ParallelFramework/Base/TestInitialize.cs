@@ -23,6 +23,7 @@ namespace ParallelFramework.Base
         public void InitializeSettings()
         {
             //Set all the settings for framework
+            //Set teh browser
             ConfigReader.SetFrameworkSettings();
 
             //Set Log

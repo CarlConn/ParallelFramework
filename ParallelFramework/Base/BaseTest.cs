@@ -15,8 +15,8 @@ namespace ParallelFramework.Base
         [TestInitialize]
         public void Initialize()
         {
-            //TestInitialize.InitializeSettings();
-            ConfigReader.SetFrameworkSettings();
+            TestInitialize.InitializeSettings();
+         
         }
 
         [TestCleanup]
