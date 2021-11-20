@@ -5,23 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
-using ParallelFrameworkTests.Base;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
     class LogInPage : BasePage
     {
-        public LogInPage(ParallelConfig parallelConfig) : base(parallelConfig)
-        {
-        }
+        public LogInPage(IWebDriver Driver) : base(Driver) { }
 
-        private IWebElement TxtUserName =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
-
-        private IWebElement TxtPassWord => _parallelConfig.Driver.FindElement(By.XPath("//*[@id='Password']"));
-
-        private IWebElement BtnLogIn =>
-            _parallelConfig.Driver.FindElement(By.XPath("//*[@id='loginForm'']/form/div[4]/div/input"));
+        private IWebElement TxtUserName => Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
+        private IWebElement TxtPassWord => Driver.FindElement(By.XPath("//*[@id='Password']"));
+        private IWebElement BtnLogIn => Driver.FindElement(By.XPath("//*[@id='loginForm'']/form/div[4]/div/input"));
 
         private bool LogInPageIsPresent()
         {
@@ -57,7 +50,7 @@ namespace ParallelFrameworkTests.UnitTestPages
         public EmployeeListPage LogInPagePressLogIn()
         {
             BtnLogIn.Click();
-            return new EmployeeListPage(_parallelConfig);
+            return new EmployeeListPage(Driver);
         }
     }
 }

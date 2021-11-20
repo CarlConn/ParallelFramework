@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
-using ParallelFrameworkTests.Base;
 using SeleniumExtras.PageObjects;
 using SeleniumExtras.WaitHelpers;
 
@@ -13,19 +12,14 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     public class BannerPage : BasePage
     {
-        public BannerPage(ParallelConfig parallelConfig) : base(parallelConfig) { }
+        public BannerPage(IWebDriver Driver) : base(Driver) { }
 
-        private IWebElement LnkHome =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[1]/a"));
+        private IWebElement LnkHome => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[1]/a"));
+        private IWebElement LnkAbout => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[2]/a"));
 
-        private IWebElement LnkAbout =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[2]/a"));
-
-        private IWebElement LnkEmployeeList =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[3]/a"));
-        private IWebElement LnkRegister =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[1]/a"));
-        private IWebElement LnkSignIn => _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[2]/a"));
+        private IWebElement LnkEmployeeList => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[3]/a"));
+        private IWebElement LnkRegister => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[1]/a"));
+        private IWebElement LnkSignIn => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[2]/a"));
 
         private bool BannerPageIsPresent()
         {

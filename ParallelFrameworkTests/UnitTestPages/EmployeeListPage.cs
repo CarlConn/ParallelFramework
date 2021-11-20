@@ -5,16 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
-using ParallelFrameworkTests.Base;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
     public class EmployeeListPage : BasePage
     {
-        public EmployeeListPage(ParallelConfig parallelConfig) : base(parallelConfig) {}
-        private IWebElement TxtSearchBox => _parallelConfig.Driver.FindElement(By.Name("searchTerm"));
-        private IWebElement BtnSearch =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//input[@type='submit' and @value='Search']"));
+        public EmployeeListPage(IWebDriver Driver) : base(Driver) {}
+        private IWebElement TxtSearchBox => Driver.FindElement(By.Name("searchTerm"));
+        private IWebElement BtnSearch => Driver.FindElement(By.XPath(".//input[@type='submit' and @value='Search']"));
 
         private bool EmployeeListPageIsPresent()
         {

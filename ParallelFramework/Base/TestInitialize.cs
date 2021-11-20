@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -12,13 +13,13 @@ namespace ParallelFramework.Base
 {
     public class TestInitialize
     {
-        private readonly ParallelConfig _parallelConfig;
+        // private readonly ParallelConfig _parallelConfig;
+        // public TestInitialize(ParallelConfig parallelConfig)
+        // {
+        //     _parallelConfig = parallelConfig;
+        // }
 
-        public TestInitialize(ParallelConfig parallelConfig)
-        {
-            _parallelConfig = parallelConfig;
-        }
-
+        public RemoteWebDriver Driver { get; set; }
 
         public void InitializeSettings()
         {
@@ -26,18 +27,18 @@ namespace ParallelFramework.Base
             //Set teh browser
             ConfigReader.SetFrameworkSettings();
 
-            //Set Log
-            LogHelpers.CreateLogFile();
-
             //Open Browser
             OpenBrowser(GetBrowserOption(Settings.BrowserType));
 
-            LogHelpers.Write("Initialized framework");
+            //Set Log
+            //LogHelpers.CreateLogFile();
+            //LogHelpers.Write("Initialized framework");
 
         }
 
         private void OpenBrowser(DriverOptions driverOptions)
         {
+            var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             switch (driverOptions)
             {
                 case InternetExplorerOptions internetExplorerOptions:
@@ -49,8 +50,8 @@ namespace ParallelFramework.Base
                     edgeOptions.UseChromium = true;
                     break;
                 case FirefoxOptions firefoxOptions:
-                    firefoxOptions.AddAdditionalCapability(CapabilityType.BrowserName, "firefox");
-                    firefoxOptions.AddAdditionalCapability(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                    firefoxOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
+                    firefoxOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
                     firefoxOptions.BrowserExecutableLocation = @"C:\";
                     break;
                 case ChromeOptions chromeOptions:
@@ -59,7 +60,8 @@ namespace ParallelFramework.Base
                     break;
             }
 
-            _parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
+            //_parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
+            Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)

@@ -8,7 +8,7 @@ using ParallelFramework.Base;
 
 namespace ParallelFramework.Config
 {
-    class Settings
+    public class Settings
     {
         public static int Timeout { get; set; }
 

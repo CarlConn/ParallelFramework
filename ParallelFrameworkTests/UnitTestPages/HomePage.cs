@@ -7,15 +7,14 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using ParallelFramework;
 using ParallelFramework.Base;
-using ParallelFrameworkTests.Base;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
     public class HomePage : BasePage
     {
-        public HomePage(ParallelConfig parallelConfig) : base(parallelConfig) { }
+        public HomePage(IWebDriver Driver) : base(Driver) { }
 
-        private IWebElement BtnLearnMore => _parallelConfig.Driver.FindElement(By.XPath((".//div[@class='col-md-4']/p[2]/a")));
+        private IWebElement BtnLearnMore => Driver.FindElement(By.XPath((".//div[@class='col-md-4']/p[2]/a")));
         
         private bool HomePageIsPresent()
         {

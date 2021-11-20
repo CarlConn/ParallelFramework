@@ -5,16 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
-using ParallelFrameworkTests.Base;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
     public class AboutPage : BasePage
     {
-        public AboutPage(ParallelConfig parallelConfig) : base(parallelConfig) {}
+        public AboutPage(IWebDriver Driver) : base(Driver) {}
 
-        private IWebElement TxtAbout =>
-            _parallelConfig.Driver.FindElement(By.XPath(".//div[@class='container body-content']/h2"));
+        private IWebElement TxtAbout => Driver.FindElement(By.XPath(".//div[@class='container body-content']/h2"));
 
         private bool AboutPageIsPresent()
         {
