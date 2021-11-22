@@ -39,6 +39,7 @@ namespace ParallelFramework.Base
         private void OpenBrowser(DriverOptions driverOptions)
         {
             var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
             switch (driverOptions)
             {
                 case InternetExplorerOptions internetExplorerOptions:
@@ -48,15 +49,17 @@ namespace ParallelFramework.Base
                     edgeOptions = new Microsoft.Edge.SeleniumTools.EdgeOptions();
                     edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
                     edgeOptions.UseChromium = true;
+                    edgeOptions.BinaryLocation = outPutDirectory;
                     break;
                 case FirefoxOptions firefoxOptions:
                     firefoxOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
                     firefoxOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
-                    firefoxOptions.BrowserExecutableLocation = @"C:\";
+                    firefoxOptions.BrowserExecutableLocation = outPutDirectory;
                     break;
                 case ChromeOptions chromeOptions:
                     chromeOptions.AddAdditionalChromeOption(CapabilityType.EnableProfiling, true);
                     chromeOptions.AddAdditionalChromeOption(CapabilityType.BrowserName, "chrome");
+                    chromeOptions.BinaryLocation = outPutDirectory;
                     break;
             }
 
