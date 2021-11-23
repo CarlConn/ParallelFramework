@@ -23,7 +23,7 @@ namespace ParallelFramework.Config
             Settings.IsReporting = configurationRoot.GetSection("testSettings").Get<TestSettings>().IsReporting;
             Settings.LogPath = configurationRoot.GetSection("testSettings").Get<TestSettings>().LogPath;
             Settings.UserName = configurationRoot.GetSection("testSettings").Get<TestSettings>().UserName;
-            Settings.PassWord = configurationRoot.GetSection("testSetting").Get<TestSettings>().PassWord;
+            Settings.PassWord = configurationRoot.GetSection("testSettings").Get<TestSettings>().PassWord;
             Settings.BrowserType = configurationRoot.GetSection("testSettings").Get<TestSettings>().Browser;
         }
     }

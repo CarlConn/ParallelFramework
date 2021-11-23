@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -21,10 +22,16 @@ namespace ParallelFramework.Base
 
         public RemoteWebDriver Driver { get; set; }
 
+        
+        [TestInitialize]
         public void InitializeSettings()
         {
             //Set all the settings for framework
             //Set teh browser
+            
+            
+            
+            
             ConfigReader.SetFrameworkSettings();
 
             //Open Browser
@@ -58,7 +65,7 @@ namespace ParallelFramework.Base
                     break;
                 case ChromeOptions chromeOptions:
                     chromeOptions.AddAdditionalChromeOption(CapabilityType.EnableProfiling, true);
-                    chromeOptions.AddAdditionalChromeOption(CapabilityType.BrowserName, "chrome");
+                    //chromeOptions.AddAdditionalChromeOption(, "Chrome");
                     chromeOptions.BinaryLocation = outPutDirectory;
                     break;
             }
