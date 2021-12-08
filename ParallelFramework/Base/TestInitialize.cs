@@ -36,40 +36,39 @@ namespace ParallelFramework.Base
             ConfigReader.SetFrameworkSettings();
 
             //Open Browser
-            OpenBrowser(Settings.BrowserType);
-
+            OpenBrowser(GetBrowserOption(Settings.BrowserType));
+            Driver.Manage().Window.Maximize();
             //Set Log
             //LogHelpers.CreateLogFile();
             //LogHelpers.Write("Initialized framework");
 
         }
 
-        private void OpenBrowser(BrowserType browserType)
+        private void OpenBrowser(DriverOptions driverOptions)
         {
-            DriverOptions driverOptions = null;
             var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
-            switch (browserType)
+            switch (driverOptions)
             {
-                case BrowserType.InternetExplorer:
+                case InternetExplorerOptions:
                     driverOptions = new InternetExplorerOptions();
                     break;
-                case BrowserType.Edge:
+                case EdgeOptions:
                     driverOptions = new EdgeOptions();
                     driverOptions.PageLoadStrategy = PageLoadStrategy.Normal;
                     break;
-                case BrowserType.FireFox:
+                case FirefoxOptions:
                     driverOptions = new FirefoxOptions();
                     driverOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
                     driverOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
                     break;
-                case BrowserType.Chrome:
+                case ChromeOptions:
                     driverOptions = new ChromeOptions();
                     driverOptions.PlatformName = "windows";
                     break;
             }
 
-            Driver = new RemoteWebDriver(new Uri("http://localhost:4444/"), driverOptions);
+            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions);
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
