@@ -3,15 +3,16 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using ParallelFramework.Config;
 using ParallelFramework.Helpers;
-using EdgeOptions = Microsoft.Edge.SeleniumTools.EdgeOptions;
 
 namespace ParallelFramework.Base
 {
+    [TestClass]
     public class TestInitialize
     {
         // private readonly ParallelConfig _parallelConfig;
@@ -64,14 +65,14 @@ namespace ParallelFramework.Base
                     firefoxOptions.BrowserExecutableLocation = outPutDirectory;
                     break;
                 case ChromeOptions chromeOptions:
+                    chromeOptions.PlatformName = "windows";
                     chromeOptions.AddAdditionalChromeOption(CapabilityType.EnableProfiling, true);
-                    //chromeOptions.AddAdditionalChromeOption(, "Chrome");
                     chromeOptions.BinaryLocation = outPutDirectory;
                     break;
             }
 
             //_parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
-            Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
+            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
