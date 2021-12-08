@@ -36,7 +36,7 @@ namespace ParallelFramework.Base
             ConfigReader.SetFrameworkSettings();
 
             //Open Browser
-            OpenBrowser(GetBrowserOption(Settings.BrowserType));
+            OpenBrowser(Settings.BrowserType);
 
             //Set Log
             //LogHelpers.CreateLogFile();
@@ -44,35 +44,32 @@ namespace ParallelFramework.Base
 
         }
 
-        private void OpenBrowser(DriverOptions driverOptions)
+        private void OpenBrowser(BrowserType browserType)
         {
+            DriverOptions driverOptions = null;
             var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
-            switch (driverOptions)
+            //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
+            switch (browserType)
             {
-                case InternetExplorerOptions internetExplorerOptions:
+                case BrowserType.InternetExplorer:
                     driverOptions = new InternetExplorerOptions();
                     break;
-                case EdgeOptions edgeOptions:
-                    edgeOptions = new Microsoft.Edge.SeleniumTools.EdgeOptions();
-                    edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
-                    edgeOptions.UseChromium = true;
-                    edgeOptions.BinaryLocation = outPutDirectory;
+                case BrowserType.Edge:
+                    driverOptions = new EdgeOptions();
+                    driverOptions.PageLoadStrategy = PageLoadStrategy.Normal;
                     break;
-                case FirefoxOptions firefoxOptions:
-                    firefoxOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
-                    firefoxOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
-                    firefoxOptions.BrowserExecutableLocation = outPutDirectory;
+                case BrowserType.FireFox:
+                    driverOptions = new FirefoxOptions();
+                    driverOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
+                    driverOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
                     break;
-                case ChromeOptions chromeOptions:
-                    chromeOptions.PlatformName = "windows";
-                    chromeOptions.AddAdditionalChromeOption(CapabilityType.EnableProfiling, true);
-                    chromeOptions.BinaryLocation = outPutDirectory;
+                case BrowserType.Chrome:
+                    driverOptions = new ChromeOptions();
+                    driverOptions.PlatformName = "windows";
                     break;
             }
 
-            //_parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), driverOptions.ToCapabilities());
-            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+            Driver = new RemoteWebDriver(new Uri("http://localhost:4444/"), driverOptions);
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
