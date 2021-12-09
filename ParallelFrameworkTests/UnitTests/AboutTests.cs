@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelFramework.Base;
@@ -12,10 +11,10 @@ using ParallelFrameworkTests.UnitTestPages;
 namespace ParallelFrameworkTests.UnitTests
 {
     [TestClass]
-    public class LogInTests : TestInitialize
+    public class AboutTests : TestInitialize
     {
         [TestMethod]
-        public void LogInPageTest()
+        public void AboutPageTests()
         {
             Driver.Navigate().GoToUrl(Settings.AUT);
             HomePage homePage = new HomePage(Driver);

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V85.Debugger;
 using OpenQA.Selenium.Support.UI;
 using ParallelFramework;
 using ParallelFramework.Base;
+using SeleniumExtras.WaitHelpers;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
@@ -21,12 +24,12 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-
+                Wait.Until(ExpectedConditions.ElementToBeClickable(BtnLearnMore));
+                result = true;
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
-                throw;
+                Console.WriteLine(e.Message);
             }
 
             return result;
@@ -35,6 +38,14 @@ namespace ParallelFrameworkTests.UnitTestPages
         public void HomePageAssertPresent()
         {
             bool result = HomePageIsPresent();
+            try
+            {
+                Assert.IsTrue(result, "Home Page is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

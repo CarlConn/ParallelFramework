@@ -15,15 +15,8 @@ namespace ParallelFramework.Base
     [TestClass]
     public class TestInitialize
     {
-        // private readonly ParallelConfig _parallelConfig;
-        // public TestInitialize(ParallelConfig parallelConfig)
-        // {
-        //     _parallelConfig = parallelConfig;
-        // }
-
         public RemoteWebDriver Driver { get; set; }
 
-        
         [TestInitialize]
         public void InitializeSettings()
         {
@@ -37,11 +30,16 @@ namespace ParallelFramework.Base
 
             //Open Browser
             OpenBrowser(GetBrowserOption(Settings.BrowserType));
-            Driver.Manage().Window.Maximize();
             //Set Log
             //LogHelpers.CreateLogFile();
             //LogHelpers.Write("Initialized framework");
 
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            Driver.Quit();
         }
 
         private void OpenBrowser(DriverOptions driverOptions)
