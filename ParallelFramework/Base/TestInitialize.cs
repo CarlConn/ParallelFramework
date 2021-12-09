@@ -46,7 +46,7 @@ namespace ParallelFramework.Base
 
         private void OpenBrowser(DriverOptions driverOptions)
         {
-            var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
             switch (driverOptions)
             {
@@ -64,11 +64,11 @@ namespace ParallelFramework.Base
                     break;
                 case ChromeOptions:
                     driverOptions = new ChromeOptions();
-                    driverOptions.PlatformName = "windows";
+                    //driverOptions.PlatformName = "windows";
                     break;
             }
 
-            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions);
+            Driver = new RemoteWebDriver(new Uri("http://192.168.1.181:4444"), driverOptions.ToCapabilities());
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
