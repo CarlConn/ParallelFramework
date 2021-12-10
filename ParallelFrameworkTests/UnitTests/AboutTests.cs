@@ -14,20 +14,27 @@ namespace ParallelFrameworkTests.UnitTests
     public class AboutTests : TestInitialize
     {
         [TestMethod]
-        public void AboutPageTests()
+        public void AboutPageHeaderText()
         {
             Driver.Navigate().GoToUrl(Settings.AUT);
-            HomePage homePage = new HomePage(Driver);
-            homePage.HomePageAssertPresent();
             BannerPage bannerPage = new BannerPage(Driver);
-            LogInPage logInPage = bannerPage.BannerPageClickLogInLink();
-            logInPage.LogInPagAssertPresent();
-            logInPage.LogInPageEnterUserName(Settings.UserName);
-            logInPage.LogInPageEnterPassWord(Settings.PassWord);
-            homePage = logInPage.LogInPagePressLogIn();
-            bannerPage.BannerPageAssertLoggedIn();
-            bannerPage.BannerPagePressSignOutLink();
-            bannerPage.BannerPageAssertSignedOut();
+            bannerPage.BannerPageAssertPresent();
+            bannerPage.BannerPageAssertAboutLinkPresent();
+            AboutPage aboutPage = bannerPage.BannerPagePressAboutPageLink();
+            aboutPage.AboutPageAssertPresent();
+            aboutPage.AboutPageAssertHeaderText();
+        }
+
+        [TestMethod]
+        public void AboutPageSustenanceText()
+        {
+            Driver.Navigate().GoToUrl(Settings.AUT);
+            BannerPage bannerPage = new BannerPage(Driver);
+            bannerPage.BannerPageAssertPresent();
+            bannerPage.BannerPageAssertAboutLinkPresent();
+            AboutPage aboutPage = bannerPage.BannerPagePressAboutPageLink();
+            aboutPage.AboutPageAssertPresent();
+            aboutPage.AboutPageAssertSentenceText();
         }
     }
 }

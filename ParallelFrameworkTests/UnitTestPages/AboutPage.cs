@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
+using SeleniumExtras.WaitHelpers;
 
 namespace ParallelFrameworkTests.UnitTestPages
 {
@@ -13,18 +15,18 @@ namespace ParallelFrameworkTests.UnitTestPages
         public AboutPage(IWebDriver Driver) : base(Driver) {}
 
         private IWebElement TxtAbout => Driver.FindElement(By.XPath(".//div[@class='container body-content']/h2"));
+        private IWebElement Txtsentence => Driver.FindElement(By.XPath(".//div[@class='container body-content']/p"));
 
         private bool AboutPageIsPresent()
         {
             bool result = false;
             try
             {
-                result = true;
+                Wait.Until(ExpectedConditions.ElementExists(By.XPath(".//div[@class='container body-content']/h2")));
             }
             catch (TimeoutException e)
             {
                 Console.WriteLine(e);
-                throw;
             }
 
             return result;
@@ -33,6 +35,46 @@ namespace ParallelFrameworkTests.UnitTestPages
         public void AboutPageAssertPresent()
         {
             bool result = AboutPageIsPresent();
+            try
+            {
+                Assert.IsTrue(result, "About Page is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
         }
+
+        public void AboutPageAssertHeaderText()
+        {
+            string expectedText = "About";
+            string actualText = TxtAbout.Text;
+
+            try
+            {
+                Assert.AreEqual(expectedText, actualText, "About Page Header text is not correct");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
+
+        }
+
+        public void AboutPageAssertSentenceText()
+        {
+            string expectedText = "ExecuteAutomation Employee Application v1.0 is a simple web application for showing very few functionality of Employee details.";
+            string actualText = Txtsentence.Text;
+
+            try
+            {
+                Assert.AreEqual(expectedText, actualText, "About Page Header text is not correct");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
     }
 }

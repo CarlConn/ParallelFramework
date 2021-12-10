@@ -89,7 +89,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             return result;
         }
 
-        private bool BannerPageIsEmployeeLinkPresent()
+        private bool BannerPageIsEmployeeListLinkPresent()
         {
             bool result = false;
             try
@@ -111,7 +111,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             try
             {
                 Wait.Until(ExpectedConditions.ElementToBeClickable(LnkRegister));
-                result = false;
+                result = true;
             }
             catch (TimeZoneNotFoundException e)
             {
@@ -119,6 +119,35 @@ namespace ParallelFrameworkTests.UnitTestPages
             }
 
             return result;
+        }
+
+        private bool BannerPageIsLogInLinkPresent()
+        {
+            bool result = false;
+            try
+            {
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn));
+                result = true;
+            }
+            catch (TimeZoneNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return result;
+        }
+
+        public void BannerPageAssertLogInLinkPresent()
+        {
+            bool result = BannerPageIsLogInLinkPresent();
+            try
+            {
+                Assert.IsTrue(result, "Banner Page Log In Link is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private bool BannerPageIsLogOutLinkPresent()
@@ -135,6 +164,12 @@ namespace ParallelFrameworkTests.UnitTestPages
             }
 
             return result;
+        }
+
+        public EmployeeListPage BannerPageClickEmployeeListLink()
+        {
+            Wait.Until(ExpectedConditions.ElementToBeClickable(LnkEmployeeList)).Click();
+            return new EmployeeListPage(Driver);
         }
 
         public LogInPage BannerPageClickLogInLink()
@@ -174,6 +209,38 @@ namespace ParallelFrameworkTests.UnitTestPages
         public void BannerPagePressSignOutLink()
         {
             Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogOut)).Click();
+        }
+
+        public void BannerPageAssertAboutLinkPresent()
+        {
+            bool result = BannerPageIsAboutLinkPresent();
+            try
+            {
+                Assert.IsTrue(result, "Banner Page About Button is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void BannerPageAssertEmployeeListLinkPresent()
+        {
+            bool result = BannerPageIsEmployeeListLinkPresent();
+            try
+            {
+                Assert.IsTrue(result, "Banner Page Employee List Link is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public AboutPage BannerPagePressAboutPageLink()
+        {
+            Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout)).Click();
+            return new AboutPage(Driver);
         }
 
     }

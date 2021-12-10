@@ -11,11 +11,13 @@ using ParallelFrameworkTests.UnitTestPages;
 
 namespace ParallelFrameworkTests.UnitTests
 {
+
     [TestClass]
     public class LogInTests : TestInitialize
     {
+
         [TestMethod]
-        public void LogInPageTest()
+        public void LogInPageTestPositive()
         {
             Driver.Navigate().GoToUrl(Settings.AUT);
             HomePage homePage = new HomePage(Driver);
@@ -30,5 +32,21 @@ namespace ParallelFrameworkTests.UnitTests
             bannerPage.BannerPagePressSignOutLink();
             bannerPage.BannerPageAssertSignedOut();
         }
+
+        [TestMethod]
+        public void LogInPageTestNegative()
+        {
+            Driver.Navigate().GoToUrl(Settings.AUT);
+            HomePage homePage = new HomePage(Driver);
+            homePage.HomePageAssertPresent();
+            BannerPage bannerPage = new BannerPage(Driver);
+            LogInPage logInPage = bannerPage.BannerPageClickLogInLink();
+            logInPage.LogInPagAssertPresent();
+            logInPage.LogInPageEnterUserName("Bob");
+            logInPage.LogInPageEnterPassWord("Bob");
+            homePage = logInPage.LogInPagePressLogIn();
+            logInPage.LogInPageAssertInvalidPresent();
+        }
+
     }
 }

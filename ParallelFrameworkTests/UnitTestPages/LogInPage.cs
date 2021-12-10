@@ -12,11 +12,16 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     public class LogInPage : BasePage
     {
-        public LogInPage(IWebDriver Driver) : base(Driver) { }
+        public LogInPage(IWebDriver Driver) : base(Driver)
+        {
+        }
 
         private IWebElement TxtUserName => Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
         private IWebElement TxtPassWord => Driver.FindElement(By.XPath("//*[@id='Password']"));
         private IWebElement BtnLogIn => Driver.FindElement(By.XPath(".//input[@type='submit' and @value='Log in']"));
+
+        private IWebElement LnkInvalidLogIn =>
+            Driver.FindElement(By.XPath(".//div[@class='validation-summary-errors text-danger']/ul/li"));
 
         private bool LogInPageIsPresent()
         {
@@ -62,5 +67,36 @@ namespace ParallelFrameworkTests.UnitTestPages
             BtnLogIn.Click();
             return new HomePage(Driver);
         }
+
+        public bool LogInPageIsInvalidPresent()
+        {
+            bool result = false;
+            try
+            {
+                Wait.Until(ExpectedConditions.ElementIsVisible(
+                    By.XPath(".//div[@class='validation-summary-errors text-danger']/ul/li")));
+                result = true;
+            }
+            catch (TimeoutException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return result;
+        }
+
+        public void LogInPageAssertInvalidPresent()
+        {
+            bool result = LogInPageIsInvalidPresent();
+            try
+            {
+                Assert.IsTrue(result, "Log In Page Invalid is not present");
+            }
+            catch (AssertFailedException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
+
 }
