@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelFramework.Base;
 using ParallelFramework.Config;
 using ParallelFrameworkTests.UnitTestPages;
+[assembly:Parallelize(Workers = 0, Scope = ExecutionScope.ClassLevel)]
 
 namespace ParallelFrameworkTests.UnitTests
 {
@@ -15,7 +16,7 @@ namespace ParallelFrameworkTests.UnitTests
     [TestClass]
     public class LogInTests : TestInitialize
     {
-
+        
         [TestMethod]
         public void LogInPageTestPositive()
         {

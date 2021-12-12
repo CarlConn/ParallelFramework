@@ -66,7 +66,7 @@ namespace ParallelFramework.Base
                     break;
             }
 
-            Driver = new RemoteWebDriver(new Uri("http://192.168.1.181:4444"), driverOptions.ToCapabilities());
+            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)

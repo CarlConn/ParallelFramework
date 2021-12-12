@@ -8,6 +8,7 @@ namespace ParallelFramework.Base
 {
     public class DriverContext
     {
+        
         public readonly ParallelConfig _parellelConfig;
 
         public DriverContext(ParallelConfig parellelConfig)
@@ -16,6 +17,6 @@ namespace ParallelFramework.Base
         }
 
         public static Browser Browser { get; set; }
-
+        
     }
 }
