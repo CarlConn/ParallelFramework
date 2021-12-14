@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -7,8 +8,13 @@ using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.DevTools;
 using ParallelFramework.Config;
 using ParallelFramework.Helpers;
+using OpenQA.Selenium.DevTools.V96.Emulation;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
+using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V96.DevToolsSessionDomains;
 
 namespace ParallelFramework.Base
 {
@@ -16,16 +22,18 @@ namespace ParallelFramework.Base
     public class TestInitialize
     {
         public RemoteWebDriver Driver { get; set; }
+        protected IDevToolsSession session;
+        protected DevToolsSessionDomains devToolsSession;
 
         [TestInitialize]
         public void InitializeSettings()
         {
             //Set all the settings for framework
             //Set teh browser
-            
-            
-            
-            
+
+
+
+
             ConfigReader.SetFrameworkSettings();
 
             //Open Browser
@@ -62,7 +70,7 @@ namespace ParallelFramework.Base
                     break;
                 case ChromeOptions:
                     driverOptions = new ChromeOptions();
-                    //driverOptions.PlatformName = "windows";
+                    DeviceModeTest();
                     break;
             }
 
@@ -84,6 +92,29 @@ namespace ParallelFramework.Base
                 default:
                     throw new ArgumentOutOfRangeException(nameof(browserType), browserType, null);
             }
+        }
+
+        public async Task DeviceModeTest()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            ChromeOptions chromeOptions = new ChromeOptions();
+            //Set ChromeDriver
+            //Driver = new ChromeDriver();
+            //Get DevTools
+            IDevTools devTools = Driver as IDevTools;
+            //DevTools Session
+            session = devTools.GetDevToolsSession();
+
+            var deviceModeSetting = new SetDeviceMetricsOverrideCommandSettings();
+            deviceModeSetting.Width = 600;
+            deviceModeSetting.Height = 1000;
+            deviceModeSetting.Mobile = true;
+            deviceModeSetting.DeviceScaleFactor = 50;
+
+            await session
+                .GetVersionSpecificDomains<OpenQA.Selenium.DevTools.V95.DevToolsSessionDomains>()
+                .Emulation
+                .SetDeviceMetricsOverride(deviceModeSetting);
         }
     }
 }
