@@ -26,7 +26,7 @@ namespace ParallelFramework.Base
         protected DevToolsSessionDomains devToolsSession;
 
         [TestInitialize]
-        public void InitializeSettings()
+        public async Task InitializeSettings()
         {
             //Set all the settings for framework
             //Set teh browser
@@ -37,7 +37,7 @@ namespace ParallelFramework.Base
             ConfigReader.SetFrameworkSettings();
 
             //Open Browser
-            OpenBrowser(GetBrowserOption(Settings.BrowserType));
+            await OpenBrowser(GetBrowserOption(Settings.BrowserType));
             //Set Log
             //LogHelpers.CreateLogFile();
             //LogHelpers.Write("Initialized framework");
@@ -50,7 +50,7 @@ namespace ParallelFramework.Base
             Driver.Quit();
         }
 
-        private void OpenBrowser(DriverOptions driverOptions)
+        private async Task OpenBrowser(DriverOptions driverOptions)
         {
             //var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", outPutDirectory);
@@ -70,11 +70,12 @@ namespace ParallelFramework.Base
                     break;
                 case ChromeOptions:
                     driverOptions = new ChromeOptions();
-                    DeviceModeTest();
+                   
                     break;
             }
 
             Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+            await DeviceModeTest();
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
@@ -96,8 +97,8 @@ namespace ParallelFramework.Base
 
         public async Task DeviceModeTest()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            ChromeOptions chromeOptions = new ChromeOptions();
+            //new DriverManager().SetUpDriver(new ChromeConfig());
+            //ChromeOptions chromeOptions = new ChromeOptions();
             //Set ChromeDriver
             //Driver = new ChromeDriver();
             //Get DevTools
@@ -106,13 +107,13 @@ namespace ParallelFramework.Base
             session = devTools.GetDevToolsSession();
 
             var deviceModeSetting = new SetDeviceMetricsOverrideCommandSettings();
-            deviceModeSetting.Width = 600;
-            deviceModeSetting.Height = 1000;
+            deviceModeSetting.Width = 375;
+            deviceModeSetting.Height = 667;
             deviceModeSetting.Mobile = true;
-            deviceModeSetting.DeviceScaleFactor = 50;
+            deviceModeSetting.DeviceScaleFactor = 100;
 
             await session
-                .GetVersionSpecificDomains<OpenQA.Selenium.DevTools.V95.DevToolsSessionDomains>()
+                .GetVersionSpecificDomains<OpenQA.Selenium.DevTools.V96.DevToolsSessionDomains>()
                 .Emulation
                 .SetDeviceMetricsOverride(deviceModeSetting);
         }

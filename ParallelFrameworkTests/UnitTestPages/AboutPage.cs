@@ -13,9 +13,8 @@ namespace ParallelFrameworkTests.UnitTestPages
     public class AboutPage : BasePage
     {
         public AboutPage(IWebDriver Driver) : base(Driver) {}
-
-        private IWebElement TxtAbout => Driver.FindElement(By.XPath(".//div[@class='container body-content']/h2"));
-        private IWebElement Txtsentence => Driver.FindElement(By.XPath(".//div[@class='container body-content']/p"));
+        private IWebElement TxtAbout => Driver.FindElement(By.CssSelector("body > div.container.body-content > h2"));
+        private IWebElement TxtSentence => Driver.FindElement(By.CssSelector("body > div.container.body-content > p"));
 
         private bool AboutPageIsPresent()
         {
@@ -23,6 +22,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             try
             {
                 Wait.Until(ExpectedConditions.ElementExists(By.XPath(".//div[@class='container body-content']/h2")));
+                result = true;
             }
             catch (TimeoutException e)
             {
@@ -64,7 +64,7 @@ namespace ParallelFrameworkTests.UnitTestPages
         public void AboutPageAssertSentenceText()
         {
             string expectedText = "ExecuteAutomation Employee Application v1.0 is a simple web application for showing very few functionality of Employee details.";
-            string actualText = Txtsentence.Text;
+            string actualText = TxtSentence.Text;
 
             try
             {

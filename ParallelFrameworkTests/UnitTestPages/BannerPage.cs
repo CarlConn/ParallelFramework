@@ -15,25 +15,39 @@ namespace ParallelFrameworkTests.UnitTestPages
     public class BannerPage : BasePage
     {
         public BannerPage(IWebDriver Driver) : base(Driver) { }
-
         private IWebElement LnkHome => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[1]/a"));
         private IWebElement LnkAbout => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[2]/a"));
-
         private IWebElement LnkEmployeeList => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[3]/a"));
         private IWebElement LnkRegister => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[1]/a"));
         private IWebElement LnkLogIn => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[2]/a"));
+        private IWebElement LnkHamburger =>
+            Driver.FindElement(By.XPath(".//button[@type='button' and @class='navbar-toggle']"));
 
+        private IWebElement LnkHamburgerHome => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[1]/a"));
+        private IWebElement LnkHamburgerAbout => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[2]/a"));
+        private IWebElement LnkHamburgerEmployeeList => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[3]/a"));
+        private IWebElement LnkHamburgerRegister => Driver.FindElement(By.Id("registerLink"));
+        private IWebElement LnkHamburgerLogIn => Driver.FindElement(By.Id("loginLink"));
         private IWebElement LnkLogOut =>
             Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/form/ul/li[2]/a"));
         private IWebElement LnkHello =>
             Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/form/ul[1]/li/a"));
+      
 
         private bool BannerPageIsPresent()
         {
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                if (LnkHamburger.Displayed)
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburger));
+                }
+                else
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                }
+
                 result = true;
             }
             catch (TimeoutException e)
@@ -78,8 +92,17 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                if (LnkHamburger.Displayed)
+                {
+                    LnkHamburger.Click();
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerAbout));
+                }
+                else
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                }
                 result = true;
+
             }
             catch (TimeoutException e)
             {
@@ -94,7 +117,15 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkEmployeeList));
+                if (LnkHamburger.Displayed)
+                {
+                    LnkHamburger.Click();
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerEmployeeList));
+                }
+                else
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                }
                 result = true;
             }
             catch (TimeoutException e)
@@ -110,7 +141,15 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkRegister));
+                if (LnkHamburger.Displayed)
+                {
+                    LnkHamburger.Click();
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerRegister));
+                }
+                else
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkRegister));
+                }
                 result = true;
             }
             catch (TimeZoneNotFoundException e)
@@ -126,7 +165,15 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn));
+                if (LnkHamburger.Displayed)
+                {
+                    LnkHamburger.Click();
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerLogIn));
+                }
+                else
+                {
+                    Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn));
+                }
                 result = true;
             }
             catch (TimeZoneNotFoundException e)
@@ -168,13 +215,29 @@ namespace ParallelFrameworkTests.UnitTestPages
 
         public EmployeeListPage BannerPageClickEmployeeListLink()
         {
-            Wait.Until(ExpectedConditions.ElementToBeClickable(LnkEmployeeList)).Click();
+            if (LnkHamburger.Displayed)
+            {
+                LnkHamburger.Click();
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerEmployeeList)).Click();
+            }
+            else
+            {
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkRegister));
+            }
             return new EmployeeListPage(Driver);
         }
 
         public LogInPage BannerPageClickLogInLink()
         {
-            Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn)).Click();
+            if (LnkHamburger.Displayed)
+            {
+                LnkHamburger.Click();
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerLogIn)).Click();
+            }
+            else
+            {
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn));
+            }
             return new LogInPage(Driver);
         }
 
@@ -239,7 +302,15 @@ namespace ParallelFrameworkTests.UnitTestPages
 
         public AboutPage BannerPagePressAboutPageLink()
         {
-            Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout)).Click();
+            if (LnkHamburger.Displayed)
+            {
+                LnkHamburger.Click();
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerAbout)).Click();
+            }
+            else
+            {
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+            }
             return new AboutPage(Driver);
         }
 
