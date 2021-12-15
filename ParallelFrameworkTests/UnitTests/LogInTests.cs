@@ -30,7 +30,7 @@ namespace ParallelFrameworkTests.UnitTests
             logInPage.LogInPageEnterPassWord(Settings.PassWord);
             homePage = logInPage.LogInPagePressLogIn();
             bannerPage.BannerPageAssertLoggedIn();
-            bannerPage.BannerPagePressSignOutLink();
+            bannerPage.BannerPagePressLogOutLink();
             bannerPage.BannerPageAssertSignedOut();
         }
 

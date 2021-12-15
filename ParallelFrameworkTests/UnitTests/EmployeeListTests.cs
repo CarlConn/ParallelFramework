@@ -34,7 +34,7 @@ namespace ParallelFrameworkTests.UnitTests
             employeeListPage.EmployeeListPageEnterSearchText("Ramesh");
             employeeListPage.EmployeeListPagePressSearchButton();
             employeeListPage.EmployeeListPageAssertFirstRowName("Ramesh");
-            bannerPage.BannerPagePressSignOutLink();
+            bannerPage.BannerPagePressLogOutLink();
             bannerPage.BannerPageAssertSignedOut();
             homePage.HomePageAssertPresent();
         }
@@ -60,7 +60,7 @@ namespace ParallelFrameworkTests.UnitTests
             employeeListPage.EmployeeListPageEnterSearchText("Carl");
             employeeListPage.EmployeeListPagePressSearchButton();
             employeeListPage.EmployeeListPageAssertFirstRowBlank();
-            bannerPage.BannerPagePressSignOutLink();
+            bannerPage.BannerPagePressLogOutLink();
             bannerPage.BannerPageAssertSignedOut();
             homePage.HomePageAssertPresent();
         }
