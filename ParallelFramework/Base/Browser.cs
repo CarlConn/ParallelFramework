@@ -21,6 +21,10 @@ namespace ParallelFramework.Base
         Edge,
         InternetExplorer,
         FireFox,
-        Chrome
+        Chrome,
+        Maximized,
+        RestoredDown,
+        iPhone,
+        iPad
     }
 }

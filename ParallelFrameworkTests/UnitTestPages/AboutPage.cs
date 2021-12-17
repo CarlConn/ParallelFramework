@@ -21,7 +21,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Wait.Until(ExpectedConditions.ElementExists(By.XPath(".//div[@class='container body-content']/h2")));
+                Wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//div[@class='container body-content']/h2")));
                 result = true;
             }
             catch (TimeoutException e)

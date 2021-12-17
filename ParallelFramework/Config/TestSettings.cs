@@ -41,6 +41,9 @@ namespace ParallelFramework.Config
         [JsonProperty("browser")]
         public BrowserType Browser { get; set; }
 
+        [JsonProperty("browserSize")]
+        public BrowserSize BrowserSize { get; set; }
+
         [JsonProperty("userName")]
         public string UserName { get; set; }
 

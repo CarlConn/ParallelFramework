@@ -61,21 +61,25 @@ namespace ParallelFramework.Base
                     break;
                 case EdgeOptions:
                     driverOptions = new EdgeOptions();
-                    driverOptions.PageLoadStrategy = PageLoadStrategy.Normal;
+                    Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+                    await DeviceModeTest(Settings.BrowserSize);
                     break;
                 case FirefoxOptions:
                     driverOptions = new FirefoxOptions();
-                    driverOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
-                    driverOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                    //driverOptions.AddAdditionalOption(CapabilityType.BrowserName, "firefox");
+                    //driverOptions.AddAdditionalOption(CapabilityType.Platform, new Platform(PlatformType.Windows));
+                    Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+                    await DeviceModeTest(Settings.BrowserSize);
                     break;
                 case ChromeOptions:
                     driverOptions = new ChromeOptions();
-                   
+                    Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+                    await DeviceModeTest(Settings.BrowserSize);
                     break;
             }
 
-            Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
-            await DeviceModeTest();
+            //Driver = new RemoteWebDriver(new Uri("http://localhost:4444"), driverOptions.ToCapabilities());
+            //await DeviceModeTest(BrowserSize.Maximized);
         }
 
         public DriverOptions GetBrowserOption(BrowserType browserType)
@@ -95,7 +99,7 @@ namespace ParallelFramework.Base
             }
         }
 
-        public async Task DeviceModeTest()
+        public async Task DeviceModeTest(BrowserSize browserSize)
         {
             //new DriverManager().SetUpDriver(new ChromeConfig());
             //ChromeOptions chromeOptions = new ChromeOptions();
@@ -107,11 +111,40 @@ namespace ParallelFramework.Base
             session = devTools.GetDevToolsSession();
 
             var deviceModeSetting = new SetDeviceMetricsOverrideCommandSettings();
+            switch (browserSize)
+            {
+                case BrowserSize.Maximized:
+                    Driver.Manage().Window.Maximize();
+                    break;
+                case BrowserSize.RestoredDown:
+                    //deviceModeSetting.Width = 375;
+                    //deviceModeSetting.Height = 667;
+                    deviceModeSetting.Mobile = false;
+                    deviceModeSetting.DeviceScaleFactor = 100;
+                    break;
+                case BrowserSize.iPhone:
+                    deviceModeSetting.Width = 375;
+                    deviceModeSetting.Height = 667;
+                    deviceModeSetting.Mobile = true;
+                    deviceModeSetting.DeviceScaleFactor = 100;
+                    break;
+                case BrowserSize.iPad:
+                    deviceModeSetting.Width = 768;
+                    deviceModeSetting.Height = 1024;
+                    deviceModeSetting.Mobile = true;
+                    deviceModeSetting.DeviceScaleFactor = 100;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(browserSize), browserSize, null);
+            }
+
+            /*
+            var deviceModeSetting = new SetDeviceMetricsOverrideCommandSettings();
             deviceModeSetting.Width = 375;
             deviceModeSetting.Height = 667;
             deviceModeSetting.Mobile = true;
             deviceModeSetting.DeviceScaleFactor = 100;
-
+            */
             await session
                 .GetVersionSpecificDomains<OpenQA.Selenium.DevTools.V96.DevToolsSessionDomains>()
                 .Emulation

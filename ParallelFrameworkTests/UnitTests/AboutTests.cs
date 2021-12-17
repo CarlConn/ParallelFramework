@@ -19,7 +19,6 @@ namespace ParallelFrameworkTests.UnitTests
             Driver.Navigate().GoToUrl(Settings.AUT);
             BannerPage bannerPage = new BannerPage(Driver);
             bannerPage.BannerPageAssertPresent();
-            bannerPage.BannerPageAssertAboutLinkPresent();
             AboutPage aboutPage = bannerPage.BannerPagePressAboutPageLink();
             aboutPage.AboutPageAssertPresent();
             aboutPage.AboutPageAssertHeaderText();
@@ -31,7 +30,6 @@ namespace ParallelFrameworkTests.UnitTests
             Driver.Navigate().GoToUrl(Settings.AUT);
             BannerPage bannerPage = new BannerPage(Driver);
             bannerPage.BannerPageAssertPresent();
-            bannerPage.BannerPageAssertAboutLinkPresent();
             AboutPage aboutPage = bannerPage.BannerPagePressAboutPageLink();
             aboutPage.AboutPageAssertPresent();
             aboutPage.AboutPageAssertSentenceText();

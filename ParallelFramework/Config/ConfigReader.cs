@@ -25,6 +25,7 @@ namespace ParallelFramework.Config
             Settings.UserName = configurationRoot.GetSection("testSettings").Get<TestSettings>().UserName;
             Settings.PassWord = configurationRoot.GetSection("testSettings").Get<TestSettings>().PassWord;
             Settings.BrowserType = configurationRoot.GetSection("testSettings").Get<TestSettings>().Browser;
+            Settings.BrowserSize = configurationRoot.GetSection("testSettings").Get<TestSettings>().BrowserSize;
         }
     }
 }

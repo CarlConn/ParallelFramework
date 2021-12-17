@@ -18,7 +18,7 @@ namespace ParallelFrameworkTests.UnitTestPages
 
         private IWebElement TxtUserName => Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
         private IWebElement TxtPassWord => Driver.FindElement(By.XPath("//*[@id='Password']"));
-        private IWebElement BtnLogIn => Driver.FindElement(By.XPath(".//input[@type='submit' and @value='Log in']"));
+        private IWebElement BtnLogIn => Driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[4]/div/input"));
 
         private IWebElement LnkInvalidLogIn =>
             Driver.FindElement(By.XPath(".//div[@class='validation-summary-errors text-danger']/ul/li"));
@@ -31,7 +31,7 @@ namespace ParallelFrameworkTests.UnitTestPages
                 Wait.Until(ExpectedConditions.ElementToBeClickable(BtnLogIn));
                 result = true;
             }
-            catch (TimeoutException e)
+            catch (NoSuchElementException e)
             {
                 Console.WriteLine(e);
             }

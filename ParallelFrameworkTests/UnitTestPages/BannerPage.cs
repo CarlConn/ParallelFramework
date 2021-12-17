@@ -22,14 +22,11 @@ namespace ParallelFrameworkTests.UnitTestPages
         private IWebElement LnkLogIn => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[2]/li[2]/a"));
         private IWebElement LnkHamburger =>
             Driver.FindElement(By.XPath(".//button[@type='button' and @class='navbar-toggle']"));
-
         private IWebElement LnkHamburgerHome => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[1]/a"));
         private IWebElement LnkHamburgerAbout => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[2]/a"));
         private IWebElement LnkHamburgerEmployeeList => Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav']/li[3]/a"));
-
         private IWebElement LnkHamburgerHello =>
             Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav navbar-right']/li[1]/a"));
-
         private IWebElement LnkHamburgerLogOff =>
             Driver.FindElement(By.XPath(".//ul[@class='nav navbar-nav navbar-right']/li[2]/a"));
         private IWebElement LnkHamburgerRegister => Driver.FindElement(By.Id("registerLink"));
@@ -337,7 +334,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             }
             else
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout)).Click();
             }
             return new AboutPage(Driver);
         }
@@ -351,7 +348,7 @@ namespace ParallelFrameworkTests.UnitTestPages
             }
             else
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkRegister));
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkEmployeeList)).Click();
             }
             return new EmployeeListPage(Driver);
         }
@@ -365,14 +362,14 @@ namespace ParallelFrameworkTests.UnitTestPages
             }
             else
             {
-                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn));
+                Wait.Until(ExpectedConditions.ElementToBeClickable(LnkLogIn)).Click();
             }
             return new LogInPage(Driver);
         }
 
         public void BannerPageAssertLoggedIn()
         {
-            string expectedText = "Hello" + Settings.UserName + "!";
+            string expectedText = "Hello" + " " + Settings.UserName + "!";
             string actualText = null;
 
             if (LnkHamburger.Displayed)

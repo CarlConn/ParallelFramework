@@ -21,6 +21,7 @@ namespace ParallelFramework.Config
         public static string BuildName { get; set; }
 
         public static BrowserType BrowserType { get; set; }
+        public static BrowserSize BrowserSize { get; set; }
 
         public static string AppConnectionString { get; set; }
 

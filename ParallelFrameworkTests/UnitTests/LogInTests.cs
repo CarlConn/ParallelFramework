@@ -47,6 +47,11 @@ namespace ParallelFrameworkTests.UnitTests
             logInPage.LogInPageEnterPassWord("Bob");
             homePage = logInPage.LogInPagePressLogIn();
             logInPage.LogInPageAssertInvalidPresent();
+
+            WebElement logo=driver.Findelement (By.xpath(“//div[@id=’divLogo’]//img”));
+            File file=logo.getScreenshotAs(OutputType.FILE);
+            File destFile =new File(“logo.png”);
+            FileUtils.copyFile(file,destfile);
         }
 
     }
