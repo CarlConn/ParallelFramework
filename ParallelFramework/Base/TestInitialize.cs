@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
@@ -12,9 +13,13 @@ using OpenQA.Selenium.DevTools;
 using ParallelFramework.Config;
 using ParallelFramework.Helpers;
 using OpenQA.Selenium.DevTools.V96.Emulation;
+using ParallelFramework.Reports;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V96.DevToolsSessionDomains;
+using NLog;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace ParallelFramework.Base
 {
@@ -24,31 +29,112 @@ namespace ParallelFramework.Base
         public RemoteWebDriver Driver { get; set; }
         protected IDevToolsSession session;
         protected DevToolsSessionDomains devToolsSession;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static TestContext _testContext;
+        public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext { get; set; }
+        private ScreenShotTaker ScreenShotTaker { get; set; }
 
         [TestInitialize]
         public async Task InitializeSettings()
         {
-            //Set all the settings for framework
-            //Set teh browser
-
-
-
-
+            Logger.Debug("*************************************** TEST STARTED");
+            Logger.Debug("*************************************** TEST STARTED");
+            Reporter.AddTestCaseMetadataToHtmlReport(TestContext);
             ConfigReader.SetFrameworkSettings();
-
-            //Open Browser
             await OpenBrowser(GetBrowserOption(Settings.BrowserType));
-            //Set Log
-            //LogHelpers.CreateLogFile();
-            //LogHelpers.Write("Initialized framework");
+            ScreenShotTaker = new ScreenShotTaker(Driver, TestContext);
+            var outPutDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Driver.Navigate().GoToUrl(outPutDirectory + @"\construction.html");
 
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            Driver.Quit();
+            Logger.Debug(GetType().FullName + " started a method tear down");
+            try
+            {
+                TakeScreenshotForTestFailure();
+            }
+            catch (System.Exception e)
+            {
+                Logger.Error(e.Source);
+                Logger.Error(e.StackTrace);
+                Logger.Error(e.InnerException);
+                Logger.Error(e.Message);
+            }
+            finally
+            {
+                StopBrowser();
+                Logger.Debug(TestContext);
+                Logger.Debug("*************************************** TEST STOPPED");
+                Logger.Debug("*************************************** TEST STOPPED");
+            }
         }
+
+        private void TakeScreenshotForTestFailure()
+        {
+            if (ScreenShotTaker != null)
+            {
+                ScreenShotTaker.CreateScreenshotIfTestFailed();
+                Reporter.ReportTestOutcome(ScreenShotTaker.ScreenshotFilePath);
+            }
+            else
+            {
+                Reporter.ReportTestOutcome("");
+            }
+        }
+
+        private void StopBrowser()
+        {
+            if (Driver == null)
+                return;
+            Driver.Quit();
+            Driver = null;
+            Logger.Trace("Browser stopped successfully.");
+        }
+
+        public void EnterZipForCookie()
+        {
+
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(3))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500),
+                };
+                wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+                var zip = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("zipcodeInput")));
+                if (zip != null)
+                {
+                    zip.SendKeys("98007");
+                    Driver.FindElement(By.Id("zipcodeSubmit")).Click();
+                }
+
+            }
+            catch (OpenQA.Selenium.WebDriverTimeoutException)
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(45));
+                //eat this error... object not there.
+            }
+        }
+
+        public void ClickNoThanks()
+        {
+            try
+            {
+                Thread.Sleep(5000);
+                WebDriverWait wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(3));
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(
+                    ".//button[@class='QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button-medium QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button-border-radius-slightly-rounded'][2]"))).Click();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
 
         private async Task OpenBrowser(DriverOptions driverOptions)
         {

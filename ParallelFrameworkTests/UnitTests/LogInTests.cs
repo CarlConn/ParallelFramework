@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using ParallelFramework.Base;
 using ParallelFramework.Config;
 using ParallelFrameworkTests.UnitTestPages;
@@ -48,10 +50,12 @@ namespace ParallelFrameworkTests.UnitTests
             homePage = logInPage.LogInPagePressLogIn();
             logInPage.LogInPageAssertInvalidPresent();
 
+            /*
             WebElement logo=driver.Findelement (By.xpath(“//div[@id=’divLogo’]//img”));
             File file=logo.getScreenshotAs(OutputType.FILE);
             File destFile =new File(“logo.png”);
             FileUtils.copyFile(file,destfile);
+            */
         }
 
     }
