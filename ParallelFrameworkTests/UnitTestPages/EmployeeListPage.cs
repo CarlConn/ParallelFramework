@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLog;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
 using SeleniumExtras.WaitHelpers;
@@ -13,6 +14,7 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     public class EmployeeListPage : BasePage
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public EmployeeListPage(IWebDriver Driver) : base(Driver) {}
         private IWebElement TxtSearchBox => Driver.FindElement(By.Name("searchTerm"));
         private IWebElement BtnSearch => Driver.FindElement(By.XPath(".//input[@type='submit' and @value='Search']"));

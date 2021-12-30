@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLog;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
 using ParallelFramework.Config;
@@ -14,6 +15,7 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     public class BannerPage : BasePage
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public BannerPage(IWebDriver Driver) : base(Driver) { }
         private IWebElement LnkHome => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[1]/a"));
         private IWebElement LnkAbout => Driver.FindElement(By.XPath(".//div[@class='navbar-collapse collapse']/ul[1]/li[2]/a"));
