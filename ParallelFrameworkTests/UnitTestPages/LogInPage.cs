@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLog;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
 using SeleniumExtras.WaitHelpers;
@@ -12,10 +13,8 @@ namespace ParallelFrameworkTests.UnitTestPages
 {
     public class LogInPage : BasePage
     {
-        public LogInPage(IWebDriver Driver) : base(Driver)
-        {
-        }
-
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        public LogInPage(IWebDriver Driver) : base(Driver) { }
         private IWebElement TxtUserName => Driver.FindElement(By.XPath(".//div[@class='col-md-10']/input"));
         private IWebElement TxtPassWord => Driver.FindElement(By.XPath("//*[@id='Password']"));
         private IWebElement BtnLogIn => Driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[4]/div/input"));

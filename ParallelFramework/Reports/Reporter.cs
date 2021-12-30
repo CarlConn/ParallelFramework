@@ -9,7 +9,6 @@ namespace ParallelFramework.Reports
 {
     public static class Reporter
     {
-
         private static readonly Logger TheLogger = LogManager.GetCurrentClassLogger();
         private static ExtentReports ReportManager { get; set; }
         private static readonly string outPutDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
