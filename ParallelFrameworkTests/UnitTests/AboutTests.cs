@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelFramework.Base;
 using ParallelFramework.Config;
+using ParallelFramework.Helpers;
+using ParallelFramework.Reports;
 using ParallelFrameworkTests.UnitTestPages;
 
 namespace ParallelFrameworkTests.UnitTests
@@ -16,6 +18,9 @@ namespace ParallelFrameworkTests.UnitTests
         [TestMethod]
         public void AboutPageHeaderText()
         {
+            Reporter.StartReporter();
+            ExcelHelpers.PopulateInCollection("/SpreadSheet/Upgrade.xlsx");
+            string name = ExcelHelpers.ReadData(1, "Value");
             Driver.Navigate().GoToUrl(Settings.AUT);
             BannerPage bannerPage = new BannerPage(Driver);
             bannerPage.BannerPageAssertPresent();

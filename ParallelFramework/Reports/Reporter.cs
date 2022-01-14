@@ -2,22 +2,24 @@
 using System.IO;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using AventStack.ExtentReports.Gherkin.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLog;
+using ExtentReports = AventStack.ExtentReports.ExtentReports;
 
 namespace ParallelFramework.Reports
 {
     public static class Reporter
     {
         private static readonly Logger TheLogger = LogManager.GetCurrentClassLogger();
-        private static ExtentReports ReportManager { get; set; }
+        private static AventStack.ExtentReports.ExtentReports ReportManager { get; set; }
         private static readonly string outPutDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         private static readonly string ApplicationDebuggingFolder = Path.Combine(outPutDirectory, @"Reports\");
-
         private static string HtmlReportFullPath { get; set; }
         public static string LatestResultsReportFolder { get; set; }
         private static TestContext MyTestContext { get; set; }
-        private static ExtentTest CurrentTestCase { get; set; }
+        private static AventStack.ExtentReports.ExtentTest CurrentTestCase { get; set; }
+        
 
         public static void StartReporter()
         {
@@ -26,7 +28,7 @@ namespace ParallelFramework.Reports
                             "Going to initialize the reporter next...");
             CreateReportDirectory();
             var htmlReporter = new ExtentHtmlReporter(HtmlReportFullPath);
-            ReportManager = new ExtentReports();
+            ReportManager = new AventStack.ExtentReports.ExtentReports();
             ReportManager.AttachReporter(htmlReporter);
         }
 
@@ -44,12 +46,12 @@ namespace ParallelFramework.Reports
         {
             MyTestContext = testContext;
             CurrentTestCase = ReportManager.CreateTest(MyTestContext.TestName);
-        }
+        } 
 
         public static void LogPassingTestStepToBugLogger(string message)
         {
             TheLogger.Info(message);
-            CurrentTestCase.Log(Status.Pass, message);
+            CurrentTestCase.Log(AventStack.ExtentReports.Status.Pass, message);
             Console.WriteLine(message);
         }
 
@@ -79,7 +81,7 @@ namespace ParallelFramework.Reports
             ReportManager.Flush();
         }
 
-        public static void LogTestStepForBugLogger(Status status, string message)
+        public static void LogTestStepForBugLogger(AventStack.ExtentReports.Status status, string message)
         {
             TheLogger.Info(message);
             CurrentTestCase.Log(status, message);

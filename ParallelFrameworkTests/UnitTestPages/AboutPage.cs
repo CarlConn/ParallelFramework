@@ -25,15 +25,15 @@ namespace ParallelFrameworkTests.UnitTestPages
             bool result = false;
             try
             {
-                Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for About Page");
+                //Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for About Page");
                 Wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//div[@class='container body-content']/h2")));
-                Reporter.LogTestStepForBugLogger(Status.Info, "About Page is present");
+                //Reporter.LogTestStepForBugLogger(Status.Info, "About Page is present");
                 result = true;
             }
             catch (NoSuchElementException e)
             {
                 Console.WriteLine(e);
-                Reporter.LogTestStepForBugLogger(Status.Fail, "About Page is not present");
+                //Reporter.LogTestStepForBugLogger(Status.Fail, "About Page is not present");
             }
 
             return result;
@@ -45,12 +45,12 @@ namespace ParallelFrameworkTests.UnitTestPages
             try
             {
                 Assert.IsTrue(result, "About Page is not present");
-                Reporter.LogPassingTestStepToBugLogger("About Page Assertion passed");
+                //Reporter.LogPassingTestStepToBugLogger("About Page Assertion passed");
             }
             catch (AssertFailedException e)
             {
                 Console.WriteLine(e);
-                Reporter.LogTestStepForBugLogger(Status.Fail, "About Page Assertion failed");
+                //Reporter.LogTestStepForBugLogger(Status.Fail, "About Page Assertion failed");
             }
         }
 
