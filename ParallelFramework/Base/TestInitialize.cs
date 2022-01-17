@@ -120,20 +120,6 @@ namespace ParallelFramework.Base
             }
         }
 
-        public void ClickNoThanks()
-        {
-            try
-            {
-                Thread.Sleep(5000);
-                WebDriverWait wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(3));
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(
-                    ".//button[@class='QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button-medium QSIWebResponsiveDialog-Layout1-SI_2lYSgv0zM3AYbBP_button-border-radius-slightly-rounded'][2]"))).Click();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
 
 
         private async Task OpenBrowser(DriverOptions driverOptions)

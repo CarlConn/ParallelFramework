@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace ParallelFramework.Reports
 {
-    class NamespaceSetUp
-    {
         [TestClass]
         public static class NamespaceSetup
         {
@@ -18,5 +16,4 @@ namespace ParallelFramework.Reports
                 Reporter.StartReporter();
             }
         }
-    }
 }

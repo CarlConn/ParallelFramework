@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelFramework.Base;
+using ParallelFramework.UnitTestPages;
 using ParallelFramework.Config;
 using ParallelFramework.Helpers;
 using ParallelFramework.Reports;
-using ParallelFrameworkTests.UnitTestPages;
 
-namespace ParallelFrameworkTests.UnitTests
+namespace ParallelFramework.UnitTests
 {
     [TestClass]
     public class AboutTests : TestInitialize
