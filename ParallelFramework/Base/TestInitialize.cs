@@ -223,4 +223,16 @@ namespace ParallelFramework.Base
                 .SetDeviceMetricsOverride(deviceModeSetting);
         }
     }
-}
+
+
+  
+        [TestClass]
+        public class NamespaceSetup
+        {
+            [AssemblyInitialize]
+            public void ExecuteForCreatingReportsNamespace(TestContext testContext)
+            {
+                Reporter.StartReporter();
+            }
+        }
+    }
