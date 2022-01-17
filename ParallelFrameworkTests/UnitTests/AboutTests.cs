@@ -18,9 +18,9 @@ namespace ParallelFrameworkTests.UnitTests
         [TestMethod]
         public void AboutPageHeaderText()
         {
-            Reporter.StartReporter();
-            ExcelHelpers.PopulateInCollection("/SpreadSheet/Upgrade.xlsx");
-            string name = ExcelHelpers.ReadData(1, "Value");
+            //Reporter.StartReporter();
+            //ExcelHelpers.PopulateInCollection("/SpreadSheet/Upgrade.xlsx");
+            //string name = ExcelHelpers.ReadData(1, "Value");
             Driver.Navigate().GoToUrl(Settings.AUT);
             BannerPage bannerPage = new BannerPage(Driver);
             bannerPage.BannerPageAssertPresent();
