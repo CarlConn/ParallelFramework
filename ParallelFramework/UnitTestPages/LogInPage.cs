@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AventStack.ExtentReports;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLog;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
+using ParallelFramework.Reports;
+using ParallelFramework.UnitTests;
 using SeleniumExtras.WaitHelpers;
 
 namespace ParallelFramework.UnitTestPages
@@ -27,12 +30,14 @@ namespace ParallelFramework.UnitTestPages
             bool result = false;
             try
             {
+                Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Log In Page to be present");
                 Wait.Until(ExpectedConditions.ElementToBeClickable(BtnLogIn));
+                Reporter.LogTestStepForBugLogger(Status.Info, "Log In Page is present");
                 result = true;
             }
             catch (NoSuchElementException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Log In Page is not present. {e.Message}");
             }
 
             return result;
@@ -44,26 +49,30 @@ namespace ParallelFramework.UnitTestPages
             try
             {
                 Assert.IsTrue(result, "Log In Page is not present");
+                Reporter.LogPassingTestStepToBugLogger("Long In page Assertion Passed");
             }
             catch (AssertFailedException e)
             {
-                Console.WriteLine(e.Message);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Log In Page is not present. {e.Message}");
             }
         }
 
         public void LogInPageEnterUserName(string userName)
         {
+            Reporter.LogTestStepForBugLogger(Status.Info, $"Log In Page User Name is {userName}");
             TxtUserName.SendKeys(userName);
         }
 
         public void LogInPageEnterPassWord(string passWord)
         {
+            Reporter.LogTestStepForBugLogger(Status.Info, $"Log In Page entered Password {passWord}");
             TxtPassWord.SendKeys(passWord);
         }
 
         public HomePage LogInPagePressLogIn()
         {
             BtnLogIn.Click();
+            Reporter.LogTestStepForBugLogger(Status.Info, "Log In Page Pressed Log In button");
             return new HomePage(Driver);
         }
 
@@ -72,13 +81,15 @@ namespace ParallelFramework.UnitTestPages
             bool result = false;
             try
             {
+                Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Log In Page Invalid text");
                 Wait.Until(ExpectedConditions.ElementIsVisible(
                     By.XPath(".//div[@class='validation-summary-errors text-danger']/ul/li")));
+                Reporter.LogTestStepForBugLogger(Status.Info, "Log In Page Invalid text is present");
                 result = true;
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Log In Page Invalid text is not present. {e.Message} ");
             }
 
             return result;
@@ -90,10 +101,11 @@ namespace ParallelFramework.UnitTestPages
             try
             {
                 Assert.IsTrue(result, "Log In Page Invalid is not present");
+                Reporter.LogPassingTestStepToBugLogger("Log In Page Invalid Assertion Passed");
             }
             catch (AssertFailedException e)
             {
-                Console.WriteLine(e.Message);
+                Reporter.LogTestStepForBugLogger(Status.Info, $"Log In Page Invalid text Assertion Failed");
             }
         }
     }

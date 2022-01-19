@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AventStack.ExtentReports;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson.IO;
 using NLog;
 using OpenQA.Selenium;
 using ParallelFramework.Base;
 using ParallelFramework.Config;
+using ParallelFramework.Reports;
 using SeleniumExtras.PageObjects;
 using SeleniumExtras.WaitHelpers;
 
@@ -45,18 +48,23 @@ namespace ParallelFramework.UnitTestPages
             {
                 if (LnkHamburger.Displayed)
                 {
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Wating for Banner Page");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburger));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page is present");
                 }
                 else
                 {
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Wating for Banner Page");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page is present");
+
                 }
 
                 result = true;
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page is not present. {e.Message}");
             }
 
             return result;
@@ -68,10 +76,11 @@ namespace ParallelFramework.UnitTestPages
             try
             {
                 Assert.IsTrue(result, "Banner Page is not present");
+                Reporter.LogPassingTestStepToBugLogger("Banner Page Assertion passed");
             }
             catch (AssertFailedException e)
             {
-                Console.WriteLine(e.Message);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Assertion failed. {e.Message}");
             }
         }
 
@@ -99,18 +108,22 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page waiting for Hamburger About");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerAbout));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hamburger About is present");
                 }
                 else
                 {
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page About link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page About link is present");
                 }
                 result = true;
 
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page About link not present. {e.Message}");
             }
 
             return result;
@@ -124,7 +137,9 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Hamburger Employee List");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerEmployeeList));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hamburger Employee List is present");
                 }
                 else
                 {
@@ -134,7 +149,7 @@ namespace ParallelFramework.UnitTestPages
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Hamburger Employee List link is not present");
             }
 
             return result;
@@ -148,17 +163,21 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page Hello link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerHello));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hello link is present");
                 }
                 else
                 {
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page Hello link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHello));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hello Link is present");
                 }
                 result = true;
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Hello Link is not present. {e.Message}");
             }
 
             return result;
@@ -172,17 +191,21 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page Log Off link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerLogOff));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Log Off link is present");
                 }
                 else
                 {
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page About link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkAbout));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page About link is present");
                 }
                 result = true;
             }
             catch (TimeoutException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Log Off link not present. {e.Message}");
             }
 
             return result;
@@ -196,7 +219,9 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page Hamburger Register link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerRegister));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hamburger Register link is present");
                 }
                 else
                 {
@@ -206,7 +231,7 @@ namespace ParallelFramework.UnitTestPages
             }
             catch (TimeZoneNotFoundException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Hamburger Registerr link is not present. {e.Message}");
             }
 
             return result;
@@ -220,7 +245,9 @@ namespace ParallelFramework.UnitTestPages
                 if (LnkHamburger.Displayed)
                 {
                     LnkHamburger.Click();
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Waiting for Banner Page Hamburger Log In link");
                     Wait.Until(ExpectedConditions.ElementToBeClickable(LnkHamburgerLogIn));
+                    Reporter.LogTestStepForBugLogger(Status.Info, "Banner Page Hamburger Log In link is present");
                 }
                 else
                 {
@@ -230,7 +257,7 @@ namespace ParallelFramework.UnitTestPages
             }
             catch (TimeZoneNotFoundException e)
             {
-                Console.WriteLine(e);
+                Reporter.LogTestStepForBugLogger(Status.Fail, $"Banner Page Hamburger Link is not present. {e.Message}");
             }
 
             return result;
